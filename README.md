@@ -1,8 +1,19 @@
 # scprime-price-watcher
 Updates the price of your ScPrime container to what the price is currently on https://scpri.me
 
-Currently, it will set the price to in between the max price and the goal price. This might change
-in the future.
+Currently, it will set the price to the goal price. This can be adjusted by using the
+`PRICE_CONSTANT` variable.
+
+### Price adjustment examples:
+- `PRICE_CONSTANT=0.0` will use the goal price.
+- `PRICE_CONSTANT=1.0` will use the max price (don't do this lol).
+- `PRICE_CONSTANT=0.5` will use the middle between max and goal price.
+- `PRICE_CONSTANT=-1.0` will use goal price with rebate `= max - goal` as price
+Default is 0.0 which is the goal price. Adjust for your situation. Typically you would offer
+a lower price (maybe `PRICE_CONSTANT=-0.2`) if you have alot of space and really want to get
+contracts. If you are running low on storage, maybe you want to increase prices so then you
+could use `PRICE_CONSTANT=-0.5` to get the price just between the max and goal price. It's
+up to you.
 
 # Run daemon:
 ```bash
@@ -21,7 +32,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     tty: true
     environment:
+      # Required. Container name of scprime container
       - CONTAINER=<name-of-scprime-daemon>
+      # Optional. Adjust pricing. Default 0.0.
+      - PRICE_CONSTANT=0.0
 ```
 ## Example output:
 ```log
