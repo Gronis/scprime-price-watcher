@@ -5,7 +5,7 @@ in the future.
 
 # Run daemon:
 ```bash
-docker run --rm -it -e CONTAINER=scp1 -v /var/run/docker.sock:/var/run/docker.sock:ro gronis/scprime-price-watcher
+docker run --rm -it -e CONTAINER=<name-of-scprime-daemon> -v /var/run/docker.sock:/var/run/docker.sock:ro gronis/scprime-price-watcher
 ```
 
 # Run with docker-compose
