@@ -1,5 +1,6 @@
 # scprime-price-watcher
 Updates the price of your ScPrime container to what the price is currently on https://scpri.me
+
 Currently, it will set the price to in between the max price and the goal price. This might change
 in the future.
 
