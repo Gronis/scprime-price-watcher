@@ -22,3 +22,10 @@ services:
     environment:
       - CONTAINER=<name-of-scprime-daemon>
 ```
+## Example output:
+```log
+Setting target price to: 18.1 SCP
+Host settings updated.
+Estimated conversion rate: 0.036186524090953694%
+Sleeping 24h...
+```
