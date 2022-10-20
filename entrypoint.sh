@@ -6,7 +6,7 @@
 # Exit on failure
 set -e
 
-PRICE_CONSTANT=${PRICE_CONSTANT:-"0.0"}
+PRICE_CONSTANT=${PRICE_CONSTANT:-"1.0"}
 
 get_target_price(){
   URL='https://grafana.scpri.me/api/ds/query'
@@ -47,9 +47,10 @@ get_target_price(){
   # Compute target price
   MAX_PRICE=$(echo $RES | jq ."results"."A"."frames" | jq ".[0].data.values" | jq ".[0]" | jq ".[0]")
   GOAL_PRICE=$(echo $RES | jq ."results"."A"."frames" | jq ".[0].data.values" | jq ".[1]" | jq ".[0]")
-  DIFF_PRICE=$(awk "BEGIN {print ($MAX_PRICE-$GOAL_PRICE)}")
-  TARGET_PRICE=$(awk "BEGIN {print ($DIFF_PRICE*$PRICE_CONSTANT+$GOAL_PRICE)}" | awk '{printf "%.2f", $1}')
-  echo $TARGET_PRICE
+  TARGET_PRICE=$(awk "BEGIN {print ($PRICE_CONSTANT*$GOAL_PRICE)}")
+  CAPPED_PRICE=$(awk "BEGIN {print ((($MAX_PRICE>$TARGET_PRICE)*$TARGET_PRICE)+(1-($MAX_PRICE>$TARGET_PRICE))*$MAX_PRICE)}")
+  FINAL_PRICE=$(echo $CAPPED_PRICE | awk '{printf "%.2f", $1}')
+  echo $FINAL_PRICE
 }
 
 ONE_DAY=86400
