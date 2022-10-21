@@ -53,13 +53,13 @@ get_target_price(){
   echo $FINAL_PRICE
 }
 
-ONE_DAY=86400
+THREE_HOURS=10800
 while [ 1 ]
 do
     TARGET_PRICE=$(get_target_price)
     echo "Setting target price to: $TARGET_PRICE SCP"
     docker exec -it $CONTAINER spc host config minstorageprice ${TARGET_PRICE}SCP
-    echo "Sleeping 24h..."
-    sleep $ONE_DAY
+    echo "Sleeping 3 hours..."
+    sleep $THREE_HOURS
 done
 

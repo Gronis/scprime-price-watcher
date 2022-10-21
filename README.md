@@ -5,7 +5,7 @@ Currently, it will set the price to the goal price. This can be adjusted by usin
 `PRICE_CONSTANT` variable.
 
 - The price will be capped to "Ceiling" price (on https://scpri.me) automatically.
-- The price is updated every 24 hours.
+- The price is updated every 3 hours.
 
 ### Price adjustment examples:
 - `PRICE_CONSTANT=1.0` will use the goal price.
@@ -39,5 +39,5 @@ services:
 Setting target price to: 18.1 SCP
 Host settings updated.
 Estimated conversion rate: 0.036186524090953694%
-Sleeping 24h...
+Sleeping 3 hours...
 ```
