@@ -45,8 +45,8 @@ get_target_price(){
   BODY_ENCODED=$(echo $BODY | awk '$1=$1' ORS=' ')
   RES=$(curl "$URL" -H 'accept: application/json' -H 'content-type: application/json' --data "$BODY_ENCODED" --compressed 2> /dev/null)
   # Compute target price
-  MAX_PRICE=$(echo $RES | jq ."results"."A"."frames" | jq ".[0].data.values" | jq ".[0]" | jq ".[0]")
   GOAL_PRICE=$(echo $RES | jq ."results"."A"."frames" | jq ".[0].data.values" | jq ".[1]" | jq ".[0]")
+  MAX_PRICE=$(echo $RES | jq ."results"."A"."frames" | jq ".[0].data.values" | jq ".[0]" | jq ".[0]" | awk "{print (\$1==\"null\")*$GOAL_PRICE+ (1-(\$1==\"null\"))*\$1}")
   TARGET_PRICE=$(awk "BEGIN {print ($PRICE_CONSTANT*$GOAL_PRICE)}")
   CAPPED_PRICE=$(awk "BEGIN {print ((($MAX_PRICE>$TARGET_PRICE)*$TARGET_PRICE)+(1-($MAX_PRICE>$TARGET_PRICE))*$MAX_PRICE)}")
   FINAL_PRICE=$(echo $CAPPED_PRICE | awk '{printf "%.2f", $1}')
